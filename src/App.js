@@ -1,9 +1,11 @@
 import './App.css';
-
+import QuestionShowPage from './components/QuestionShowPage';
+import QuestionIndexPage from './components/QuestionsIndexPage';
 function App() {
   return (
     <div className="App">
-hello world
+<QuestionShowPage/>
+<QuestionIndexPage/>
     </div>
   );
 }
