@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import questionsIndexData from '../questionIndexData';
+import questionIndexData from '../questionIndexData';
 import NewQuestionForm from './NewQuestionForm';
 
 class QuestionIndexPage extends Component {
@@ -57,4 +57,4 @@ class QuestionIndexPage extends Component {
   }
 }
 
-export default QuestionsIndexPage
+export default QuestionIndexPage
