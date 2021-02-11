@@ -9,7 +9,7 @@ import React from 'react';
       <div>
         <h2>{title}</h2>
         <p>{body}</p>
-        <p>By {author.full_name} | {randomNumber}</p>
+        <p>By {author?author.full_name: ''}</p>
         {randomDiv}
         <p>
           <small>Seen {view_count} times</small>
