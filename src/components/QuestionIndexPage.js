@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NewQuestionForm from './NewQuestionForm';
 import { Question } from '../requests';
+import { Link } from 'react-router-dom';
+
 
 class QuestionIndexPage extends Component {
   constructor(props) {
@@ -57,10 +59,12 @@ Question.index()
         <NewQuestionForm createQuestion={this.createQuestion}/>
         {this.state.questions.map(q => {
           return(
+            <Link to={`/questions/${q.id}`}>
             <div key={q.id}>
               <h1>{q.id} - {q.title}</h1>
               <button onClick={() => this.deleteQuestion(q.id)}>Delete</button>
             </div>
+            </Link>
           )
         })}
       </main>
