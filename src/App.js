@@ -4,15 +4,17 @@ import QuestionShowPage from './components/QuestionShowPage';
 import QuestionIndexPage from './components/QuestionIndexPage';
 import CurrentDateTime from './components/CurrentDateTime';
 import Navbar from './components/Navbar';
-import NewQuestionForm from './components/NewQuestionForm';
-import SignInPage from './components/SignInPage';
+import NewQuestionForm from './components/NewQuestionForm'
+import SignInPage from './components/SignInPage'
 import AuthRoute from './components/AuthRoute';
+import SignUpPage from './components/SignUpPage'
 import {
   BrowserRouter,
   Route,
   Switch
 } from 'react-router-dom'
 import { Session } from './requests';
+import QuestionNewPage from './components/QuestionNewPage';
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class App extends Component {
       user:null
     }
     this.handleSubmit=this.handleSubmit.bind(this)
+    this.destroySession=this.destroySession.bind(this)
   }
 
   componentDidMount() {
@@ -46,21 +49,32 @@ class App extends Component {
       })
 
   }
+  destroySession(){
+    Session.destroy()
+    .then(res=>{
+      this.setState(
+          (
+          state=>{return {user:null}}
+          )
+        )
+      })
+  }
 
   render() {
     return (
       <div className="App">
         <BrowserRouter>
-        <Navbar currentUser={this.state.user}/>
+        <Navbar currentUser={this.state.user} destroySession={this.destroySession}/>
           <Switch>
             
             <Route exact path='/questions' component={QuestionIndexPage} />
-            {/* <Route path='/questions/new' component={NewQuestionForm} /> */}
-            <AuthRoute path='/questions/new' isAuth={this.state.user} component={NewQuestionForm}/> 
+            {/*<Route path='/questions/new' component={NewQuestionForm} />*/}
+            <AuthRoute path='/questions/new' isAuth={this.state.user} component={QuestionNewPage}/>
             <Route path='/questions/:id' component={QuestionShowPage} />
             {/*<Route path='/sign_in'><SignInPage handleSubmit={this.handleSubmit}/></Route>*/}
             {/* https://reactrouter.com/web/api/Route/render-func */}
             <Route path='/sign_in' render={(routeProps)=><SignInPage handleSubmit={this.handleSubmit} {...routeProps}/>} />
+            <Route path='/sign_up'><SignUpPage/></Route> 
           </Switch>
         </BrowserRouter>
       </div>

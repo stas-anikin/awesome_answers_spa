@@ -1,25 +1,48 @@
-import React, { Component } from 'react'
-import NewQuestionForm from './NewQuestionForm';
-import {Question} from '../requests';
+import React, { Component } from "react";
+import NewQuestionForm from "./NewQuestionForm";
+import { Question } from "../requests";
 class QuestionNewPage extends Component {
   constructor(props) {
     super(props);
-    this.createQuestion=this.createQuestion.bind(this);
+    this.state = {
+      newQuestionData: {
+        title: "",
+        body: "",
+      },
+    };
+    this.createQuestion = this.createQuestion.bind(this);
+    this.updateQuestionData = this.updateQuestionData.bind(this);
+
   }
-createQuestion(params){
-    Question.create(params)
-    .then(({id})=>{
+  createQuestion() {
+    Question.create(this.state.newQuestionData)
+      .then(({ id }) => {
         this.props.history.push(`/questions/${id}`)
-    })
+      })
+  }
+updateQuestionData(props){
+  this.setState((state)=>{
+    console.log(props);
+    console.log(state);
+return{
+  newQuestionData:{
+    ...state.newQuestionData,
+    ...props
+  }
 }
-
+  })
+}
   render() {
-    return(
+    return (
       <main>
-        <NewQuestionForm createQuestion={this.createQuestion}/>
+        <NewQuestionForm
+          createQuestion={this.createQuestion}
+          newQuestionData={this.state.newQuestionData}
+        updateQuestionData={this.updateQuestionData}
+        />
       </main>
-    )
+    );
   }
 }
 
-export default QuestionNewPage
+export default QuestionNewPage;
